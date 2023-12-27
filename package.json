@@ -1,0 +1,35 @@
+{
+  "name": "mcts-tic-tac-toe",
+  "version": "1.0.0",
+  "description": "Tic Tac Toe game implementation featuring a Monte Carlo based AI engine.",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "vitest",
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Matthew-Nicholson/mcts-tic-tac-toe.git"
+  },
+  "keywords": [
+    "TicTacToe",
+    "Monte",
+    "Carlo",
+    "Tree",
+    "Search"
+  ],
+  "author": "Matthew Nicholson",
+  "license": "MIT",
+  "devDependencies": {
+    "playwright": "^1.40.1",
+    "prettier": "^3.1.1",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.10",
+    "vitest": "^1.1.0"
+  }
+}
