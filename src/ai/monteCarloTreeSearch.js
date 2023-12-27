@@ -1,13 +1,12 @@
 /* eslint-disable valid-jsdoc */
 /* eslint-disable no-unused-vars */
 
-// NOTE: This is a work in progress. It is not yet functional. 
+// NOTE: This is a work in progress. It is not yet functional.
 // Some of this code needs to be extracted into a separate file.
 // This does not yet comply with our folder structure.
 
-
 function calculateUCB1Value(totalTrials, nodeReward, nodeTrials) {
-  const explorationTerm = Math.sqrt(2 * Math.log(totalTrials) / nodeTrials);
+  const explorationTerm = Math.sqrt((2 * Math.log(totalTrials)) / nodeTrials);
   const averageReward = nodeReward / nodeTrials;
   const ucb1Value = averageReward + explorationTerm;
   return ucb1Value.toFixed(4);
@@ -18,7 +17,7 @@ function isLeafNode(node) {
 }
 
 class TicTacToe {
-  constructor(toMove = 'player1', gameType = 'twoPlayer') {
+  constructor(toMove = "player1", gameType = "twoPlayer") {
     this.playersEnum = {
       player1: 0,
       player2: 1,
@@ -34,8 +33,8 @@ class TicTacToe {
     this.gameType = this.gameTypeEnum[gameType];
 
     this.piecesEnum = {
-      x: 'X',
-      o: 'O',
+      x: "X",
+      o: "O",
     };
 
     this.eventsEnum = {
@@ -48,23 +47,22 @@ class TicTacToe {
 
     this.toMove = this.playersEnum[toMove];
 
-    this.board =
-      [
-        ['', '', ''],
-        ['', '', ''],
-        ['', '', ''],
-      ];
+    this.board = [
+      ["", "", ""],
+      ["", "", ""],
+      ["", "", ""],
+    ];
   }
 
   print() {
-    console.log('\n');
+    console.log("\n");
     this.board.forEach((row, i) => {
-      console.log(row.map((cell) => cell || ' ').join(' | '));
+      console.log(row.map((cell) => cell || " ").join(" | "));
       if (i < this.board.length - 1) {
-        console.log('---------');
+        console.log("---------");
       }
     });
-    console.log('\n');
+    console.log("\n");
   }
 
   /** Forcibly makes a move. Does not check for legality */
@@ -92,7 +90,7 @@ class TicTacToe {
   }
 
   isDraw() {
-    return !this.isWin() && this.board.flat().every((cell) => cell !== '');
+    return !this.isWin() && this.board.flat().every((cell) => cell !== "");
   }
 
   isGameOver() {
