@@ -1,6 +1,5 @@
-TODO
-- Outline instructions for running unit tests.
-- Outline instructions for running e2e tests.
-- This project does not require component testing.
+## Testing Tic-Tac-Toe
 
-This project uses Vitest for unit testing, and Playwright for E2E testing.
+### Vitest and Playwright
+
+This project uses Vitest for unit tests, and Playwright for End-to-End (E2E) testing. To run the tests, use `npm run test`. Be aware that the dev server must be running for Playwright to have anything to test against.
