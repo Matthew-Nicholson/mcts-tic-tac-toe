@@ -20,4 +20,9 @@
     },
     "editor.formatOnSave": true,
     "editor.formatOnPaste": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "explicit"
+    },
+    "eslint.enable": true,
+    "eslint.run": "onSave",
 }
