@@ -5,18 +5,17 @@ export class MonteCarloSearchTree<T> {
   initialNode: Node<T>;
   getOptions: (node: Node<T>) => Node<T>[];
   isTerminal: (node: Node<T>) => boolean;
-  evaluation: number | null;
-  nodeUnderEvaluation: Node<T> | null;
+  getValue: (node: Node<T>) => number;
   constructor(
     initialNode: Node<T>,
     getOptionsCb: (node: Node<T>) => Node<T>[],
-    isTerminalCb: (node: Node<T>) => boolean
+    isTerminalCb: (node: Node<T>) => boolean,
+    evaluateTerminalCb: (node: Node<T>) => number
   ) {
     this.initialNode = initialNode;
     this.getOptions = getOptionsCb;
     this.isTerminal = isTerminalCb;
-    this.evaluation = null;
-    this.nodeUnderEvaluation = null;
+    this.getValue = evaluateTerminalCb;
   }
 
   isLeafNode(node: Node<T>): boolean {

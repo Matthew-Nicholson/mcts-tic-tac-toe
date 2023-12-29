@@ -1,15 +1,15 @@
 export class Node<T> {
-  constructor(
-    public value: T,
-    public wins: number,
-    public visits: number,
-    public parent: Node<T> | null,
-    public children: Node<T>[]
-  ) {
+  public children: Node<T>[] = [];
+  public parent: Node<T> | null = null;
+  public wins: number = 0;
+  public visits: number = 0;
+
+  constructor(public value: T) {
     this.value = value;
-    this.wins = wins;
-    this.visits = visits;
-    this.parent = parent;
-    this.children = children;
+  }
+
+  addChild(node: Node<T>) {
+    this.children.push(node);
+    node.parent = this;
   }
 }
