@@ -1,0 +1,75 @@
+.hdg /* Heading */ {
+  font-weight: 700;
+}
+
+/* 1.250 - Major */
+.text-5xl {
+  font-size: 4.5rem;
+}
+
+.text-4xl {
+  font-size: 4rem;
+}
+
+.text-3xl {
+  font-size: 3.5rem;
+}
+
+.text-2xl {
+  font-size: 3rem;
+}
+
+.text-xl {
+  font-size: 2.5rem;
+}
+
+.text-lg {
+  font-size: 2rem;
+}
+
+.text-md {
+  font-size: 1rem;
+}
+
+.text-sm {
+  font-size: 0.8rem;
+}
+
+.text-xs {
+  font-size: 0.64rem;
+}
+
+@media screen and (min-width: 769px) {
+  /* 1.333 - Perfect Forth */
+  .text-5xl {
+    font-size: 5rem;
+  }
+
+  .text-4xl {
+    font-size: 4.5rem;
+  }
+
+  .text-3xl {
+    font-size: 4rem;
+  }
+
+  .text-2xl {
+    font-size: 3.5rem;
+  }
+
+  .text-xl {
+    font-size: 3rem;
+  }
+
+  .text-lg {
+    font-size: 2.5rem;
+  }
+
+  .text-sm {
+    font-size: 0.75rem;
+  }
+
+  .text-xs {
+    font-size: 0.563rem;
+  }
+}

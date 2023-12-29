@@ -1,0 +1,27 @@
+@import url(./typography.css);
+
+.app {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
+}
+
+.header {
+  padding: 2rem 1.6rem;
+  text-align: center;
+}
+
+.container {
+  padding-inline: 1.6rem;
+}
+
+.content {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.footer {
+  text-align: center;
+}
