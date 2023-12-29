@@ -1,15 +1,9 @@
-import { GameTypes } from "../shared/types/gameTypes";
-import { PlayerTypes } from "../shared/types/playerTypes";
+import { Pieces } from "../shared/types/pieces";
 
-export interface TicTacToe {
-  gameType: GameTypes;
-  piecesEnum: { x: string; o: string };
-  toMove: PlayerTypes;
-  board: string[][];
-  print(): void;
-  placeMove(row: number, column: number, piece: string): void;
-  isWin(): boolean;
-  isDraw(): boolean;
-  isGameOver(): boolean;
-  getLegalMoves(): [number, number][];
-}
+export type Results = Pieces | "draw" | null;
+
+export type Row = 0 | 1 | 2;
+
+export type Column = 0 | 1 | 2;
+
+export type Square = [Row, Column];
