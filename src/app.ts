@@ -1,6 +1,12 @@
+import "./web/components/gameBoard";
+
 class TicTacToe extends HTMLElement {
   connectedCallback() {
-    this.innerHTML = `<p>Tic Tac Toe game will go here</p>`;
+    this.innerHTML = `
+      <section class='game'>
+         <game-board></game-board>
+      </section>
+    `;
   }
 }
 

@@ -4,27 +4,27 @@
 
 /* 1.250 - Major */
 .text-5xl {
-  font-size: 4.5rem;
-}
-
-.text-4xl {
   font-size: 4rem;
 }
 
-.text-3xl {
+.text-4xl {
   font-size: 3.5rem;
 }
 
-.text-2xl {
+.text-3xl {
   font-size: 3rem;
 }
 
-.text-xl {
+.text-2xl {
   font-size: 2.5rem;
 }
 
-.text-lg {
+.text-xl {
   font-size: 2rem;
+}
+
+.text-lg {
+  font-size: 1.75rem;
 }
 
 .text-md {

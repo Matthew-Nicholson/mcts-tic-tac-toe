@@ -75,12 +75,16 @@ export class TicTacToeGame implements TicTacToeType {
   }
 }
 
-}
-
 export class TicTacToe {
   gameType: string;
-  piecesEnum: { x: string; o: string; };
-  eventsEnum: { gameStart: number; player1Moved: number; player2Moved: number; aiMoved: number; gameOver: number; };
+  piecesEnum: { x: string; o: string };
+  eventsEnum: {
+    gameStart: number;
+    player1Moved: number;
+    player2Moved: number;
+    aiMoved: number;
+    gameOver: number;
+  };
   toMove: string;
   board: string[][];
   constructor(toMove = PlayerTypes.player1, gameType = GameTypes.twoPlayer) {

@@ -1,0 +1,37 @@
+:root {
+  --board-size: 300px;
+  --board-border-color: #fff;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  height: var(--board-size);
+  width: var(--board-size);
+}
+
+.square {
+  border-color: var(--board-border-color);
+  border-width: 5px;
+  cursor: pointer;
+}
+
+.square.left {
+  border-right-style: solid;
+}
+.square.right {
+  border-left-style: solid;
+}
+.square.top {
+  border-bottom-style: solid;
+}
+.square.bottom {
+  border-top-style: solid;
+}
+
+/* LARGE TABLET + */
+@media screen and (min-width: 769px) {
+  :root {
+    --board-size: 450px;
+  }
+}
