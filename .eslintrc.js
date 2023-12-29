@@ -28,5 +28,9 @@ export default {
     "import/order": ["error", { alphabetize: { order: "asc" } }],
     "import/no-cycle": "error",
     "import/newline-after-import": "error",
+    "@typescript-eslint/member-ordering": [
+      "error",
+      { default: ["signature", "method", "constructor", "field"] },
+    ],
   },
 };
