@@ -1,174 +1,120 @@
-import { GameTypes } from "../shared/types/gameTypes";
+import type { BoardState } from "../shared/types/boardState";
+import { Pieces } from "../shared/types/pieces";
 import { PlayerTypes } from "../shared/types/playerTypes";
-import type { TicTacToe as TicTacToeType } from "./types";
+import { getInitialPosition } from "../shared/utils/getInitialPosition";
+import type { Results, Square } from "./types";
+import { isGameOver } from "./utils/isGameOver";
 
-export class TicTacToeGame implements TicTacToeType {
-  gameType: TicTacToeType["gameType"];
-  toMove: TicTacToeType["toMove"];
-  board: string[][];
-  constructor(toMove = PlayerTypes.player1, gameType = GameTypes.twoPlayer) {
-    this.gameType = GameTypes[gameType];
+interface Player {
+  name: string;
+  type: PlayerTypes;
+  piece: Pieces;
+}
+export class TicTacToeGame {
+  playerX: Player;
+  playerO: Player;
+  boardState = getInitialPosition();
+  moveHistory = [getInitialPosition()];
+  result: Results = null;
+  toMove;
 
-    this.toMove = PlayerTypes[toMove];
-
-    this.board = [
-      ["", "", ""],
-      ["", "", ""],
-      ["", "", ""],
-    ];
+  constructor(playerX: PlayerTypes, playerO: PlayerTypes) {
+    this.playerX = {
+      name: "Player X",
+      type: playerX,
+      piece: Pieces.x,
+    };
+    this.playerO = {
+      name: "Player O",
+      type: playerO,
+      piece: Pieces.o,
+    };
+    this.toMove = this.playerX;
   }
 
-  print() {
+  getBoardState(): BoardState {
+    return this.boardState;
+  }
+
+  setTurn(player: Player): void {
+    this.toMove = player;
+  }
+
+  toggleSideToMove(): void {
+    this.toMove = this.toMove === this.playerX ? this.playerO : this.playerX;
+  }
+
+  getSideToMove(): Player {
+    return this.toMove;
+  }
+
+  makeMove(square: Square) {
+    if (!this.isLegalMove(square)) return;
+
+    this.boardState[square[0]][square[1]] = this.toMove.piece;
+
+    this.addToHistory(this.boardState);
+
+    this.toggleSideToMove();
+
+    return this;
+  }
+
+  getLegalMoves(): Square[] {
+    const legalMoves: Square[] = [];
+    this.getBoardState().forEach((row, i) => {
+      row.forEach((col, j) => {
+        if (col === "") {
+          legalMoves.push([i, j] as Square);
+        }
+      });
+    });
+    return legalMoves;
+  }
+
+  isLegalMove(square: Square, board = this.getBoardState()): boolean {
+    return board[square[0]][square[1]] === "";
+  }
+
+  getMoveHistory(): BoardState[] {
+    return this.moveHistory;
+  }
+
+  getResult(): Results {
+    return this.result;
+  }
+
+  setResult(result: Pieces | "draw" | null): void {
+    this.result = result;
+  }
+
+  newGame(playerX: PlayerTypes, playerO: PlayerTypes) {
+    return new TicTacToeGame(playerX, playerO);
+  }
+
+  clearBoard() {
+    this.boardState = getInitialPosition();
+    return this;
+  }
+
+  addToHistory(board: BoardState): void {
+    this.moveHistory.push(board);
+  }
+
+  isGameOver() {
+    return isGameOver(this.getBoardState());
+  }
+
+  print(): void {
     console.log("\n");
-    this.board.forEach((row, i) => {
+    this.boardState.forEach((row, i) => {
       console.log(row.map((cell) => cell || " ").join(" | "));
-      if (i < this.board.length - 1) {
+      if (i < this.boardState.length - 1) {
         console.log("---------");
       }
     });
     console.log("\n");
   }
-
-  /** Forcibly makes a move. Does not check for legality */
-  placeMove(row, column, piece) {
-    this.board[row][column] = piece;
-  }
-
-  isWin() {
-    const lines = [
-      [this.board[0][0], this.board[0][1], this.board[0][2]],
-      [this.board[1][0], this.board[1][1], this.board[1][2]],
-      [this.board[2][0], this.board[2][1], this.board[2][2]],
-      [this.board[0][0], this.board[1][0], this.board[2][0]],
-      [this.board[0][1], this.board[1][1], this.board[2][1]],
-      [this.board[0][2], this.board[1][2], this.board[2][2]],
-      [this.board[0][0], this.board[1][1], this.board[2][2]],
-      [this.board[0][2], this.board[1][1], this.board[2][0]],
-    ];
-
-    for (const line of lines) {
-      if (line.every((value, i, arr) => value && value === arr[0])) {
-        return true;
-      }
-    }
-    return false; // Added return statement for the case when there is no win
-  }
-
-  isDraw() {
-    return !this.isWin() && this.board.flat().every((cell) => cell !== "");
-  }
-
-  isGameOver() {
-    return this.isWin() || this.isDraw();
-  }
-
-  getLegalMoves() {
-    const moves = [];
-    for (let i = 0; i < this.board.length; i++) {
-      for (let j = 0; j < this.board[i].length; j++) {
-        if (!this.board[i][j]) {
-          moves.push([i, j]);
-        }
-      }
-    }
-    return moves;
-  }
 }
 
-}
-
-export class TicTacToe {
-  gameType: string;
-  piecesEnum: { x: string; o: string; };
-  eventsEnum: { gameStart: number; player1Moved: number; player2Moved: number; aiMoved: number; gameOver: number; };
-  toMove: string;
-  board: string[][];
-  constructor(toMove = PlayerTypes.player1, gameType = GameTypes.twoPlayer) {
-    this.gameType = GameTypes[gameType];
-
-    this.piecesEnum = {
-      x: "X",
-      o: "O",
-    };
-
-    this.eventsEnum = {
-      gameStart: 0,
-      player1Moved: 1,
-      player2Moved: 2,
-      aiMoved: 3,
-      gameOver: 4,
-    };
-
-    this.toMove = PlayerTypes[toMove];
-
-    this.board = [
-      ["", "", ""],
-      ["", "", ""],
-      ["", "", ""],
-    ];
-  }
-
-  print() {
-    console.log("\n");
-    this.board.forEach((row, i) => {
-      console.log(row.map((cell) => cell || " ").join(" | "));
-      if (i < this.board.length - 1) {
-        console.log("---------");
-      }
-    });
-    console.log("\n");
-  }
-
-  /** Forcibly makes a move. Does not check for legality */
-  placeMove(row, column, piece) {
-    this.board[row][column] = piece;
-  }
-
-  isWin() {
-    const lines = [
-      [this.board[0][0], this.board[0][1], this.board[0][2]],
-      [this.board[1][0], this.board[1][1], this.board[1][2]],
-      [this.board[2][0], this.board[2][1], this.board[2][2]],
-      [this.board[0][0], this.board[1][0], this.board[2][0]],
-      [this.board[0][1], this.board[1][1], this.board[2][1]],
-      [this.board[0][2], this.board[1][2], this.board[2][2]],
-      [this.board[0][0], this.board[1][1], this.board[2][2]],
-      [this.board[0][2], this.board[1][1], this.board[2][0]],
-    ];
-
-    for (const line of lines) {
-      if (line.every((value, i, arr) => value && value === arr[0])) {
-        return true;
-      }
-    }
-  }
-
-  isDraw() {
-    return !this.isWin() && this.board.flat().every((cell) => cell !== "");
-  }
-
-  isGameOver() {
-    return this.isWin() || this.isDraw();
-  }
-
-  getLegalMoves() {
-    const moves = [];
-    for (let i = 0; i < this.board.length; i++) {
-      for (let j = 0; j < this.board[i].length; j++) {
-        if (!this.board[i][j]) {
-          moves.push([i, j]);
-        }
-      }
-    }
-    return moves;
-  }
-}
-const game = new TicTacToe();
-game.print();
-game.placeMove(0, 0, game.piecesEnum.x);
-game.print();
-game.placeMove(1, 1, game.piecesEnum.o);
-game.print();
-game.placeMove(0, 2, game.piecesEnum.x);
-game.print();
-console.log(game.getLegalMoves());
+const game = new TicTacToeGame(PlayerTypes.human, PlayerTypes.ai);
