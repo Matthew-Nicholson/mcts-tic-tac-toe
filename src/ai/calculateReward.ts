@@ -1,5 +1,5 @@
 import { isDraw } from "../game/utils/isDraw";
-import { isGameOver } from "../game/utils/isGameOver";
+import { isGameOver } from "./isGameOver";
 import { isWin } from "../game/utils/isWin";
 import { BoardState } from "../shared/types/boardState";
 import { Pieces } from "../shared/types/pieces";
@@ -10,7 +10,7 @@ export function calculateReward(
   node: Node<BoardState>,
   perspective: Pieces
 ): number {
-  if (!isGameOver(node.value)) {
+  if (!isGameOver(node)) {
     throw new Error("calculateReward called on non-terminal node");
   }
 

@@ -5,6 +5,8 @@ import { calculateReward } from "./calculateReward";
 import { Node } from "./node";
 import { Pieces } from "../shared/types/pieces";
 import { getChildNodes } from "./getChildNodes";
+import { isGameOver } from "./isGameOver";
+import { copyBoard } from "../shared/utils/copyBoard";
 
 export class MonteCarloTreeSearch<T, EP extends string> {
   evaluationPerspective: EP;
@@ -58,56 +60,54 @@ export class MonteCarloTreeSearch<T, EP extends string> {
     return node.visits;
   }
 
-  selectRandomChild(node: Node<T>): Node<T> {
-    const randomIndex = Math.floor(Math.random() * node.children.length);
-    return node.children[randomIndex];
+  expandNode(node: Node<T>): void {
+    if (node.children.length > 0) {
+      return;
+    }
+    const childNodes = this.getChildNodes(node);
+    for (let child of childNodes) {
+      node.addChild(child);
+    }
   }
 
   rollout(node: Node<T>): void {
-    if (this.isTerminal(node)) {
-      const reward = this.getReward(node, this.evaluationPerspective);
-      this.backpropagate(node, reward);
-      return;
+    let current = node;
+    while (!this.isTerminal(current)) {
+      let opts = this.getChildNodes(current);
+      current = opts[Math.floor(Math.random() * opts.length)];
     }
-
-    const options = this.getChildNodes(node);
-    for (let option of options) {
-      node.addChild(option);
-    }
-    const randomChild = this.selectRandomChild(node);
-    return this.rollout(randomChild);
   }
 
   backpropagate(node: Node<T>, reward: number): void {
-    let current;
-    current = node;
+    let current = node;
     while (current) {
       current.visits++;
       current.score += reward;
-      current = this.getParent(current);
+      current = this.getParent(current) as Node<T>;
     }
   }
 
-  search(iterations: number): Node<T> | undefined {
-    if (iterations < 1) {
-      return this.initialNode.children.sort((a, b) => b.visits - a.visits)[0];
+  search(iterations: number, node: Node<T>): T | null {
+    console.log("searching...");
+    if (iterations === 0) {
+      return this.initialNode.children.sort((a, b) => b.visits - a.visits)[0]
+        .value;
     }
-    let current = this.currentNodeUnderEvaluation;
-
-    // Get to a leaf node
-    while (!this.isLeafNode(current)) {
-      current = this.getMaxUCB1(current.children);
-    }
-    // Check if leaf node has been visited
-    let hasVisits = this.getVisits(current) > 0;
-
-    if (hasVisits) {
-      current = this.getMaxUCB1(current.children);
+    let current = node;
+    if (this.isLeafNode(current)) {
+      if (this.getVisits(current) === 0) {
+        this.rollout(current);
+      } else {
+        for (let child of this.getChildNodes(current)) {
+          current.addChild(child);
+        }
+        current = node.children[0];
+        this.rollout(current);
+      }
     } else {
-      this.rollout(current);
+      current = this.getMaxUCB1(current.children);
     }
-    this.currentNodeUnderEvaluation = current;
-    this.search(iterations - 1);
+    return this.search(iterations - 1, node);
   }
 }
 
@@ -116,11 +116,11 @@ const mcts = new MonteCarloTreeSearch(
   Pieces.x,
   new Node(game.getBoardState()),
   getChildNodes,
-  game.isGameOver.bind(game),
+  isGameOver,
   calculateReward
 );
 
-mcts.search(100);
+mcts.search(2, mcts.initialNode);
 
 // Variables...
 // CurrentNodeUnderEvaluation
