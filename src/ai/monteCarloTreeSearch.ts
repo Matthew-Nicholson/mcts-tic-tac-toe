@@ -4,9 +4,9 @@ import { calculateUCB1 } from "./calculateUCB1";
 import { calculateReward } from "./calculateReward";
 import { Node } from "./node";
 import { Pieces } from "../shared/types/pieces";
-import { getChildrenNodes } from "./getChildrenNodes";
+import { getChildNodes } from "./getChildNodes";
 
-export class MonteCarloSearchTree<T, EP extends string> {
+export class MonteCarloTreeSearch<T, EP extends string> {
   evaluationPerspective: EP;
   initialNode: Node<T>;
   getChildNodes: (node: Node<T>) => Node<T>[];
@@ -65,7 +65,6 @@ export class MonteCarloSearchTree<T, EP extends string> {
 
   rollout(node: Node<T>): void {
     if (this.isTerminal(node)) {
-      console.log("Result:", this.getReward(node, this.evaluationPerspective));
       const reward = this.getReward(node, this.evaluationPerspective);
       this.backpropagate(node, reward);
       return;
@@ -113,16 +112,15 @@ export class MonteCarloSearchTree<T, EP extends string> {
 }
 
 const game = new TicTacToeGame(PlayerTypes.human, PlayerTypes.ai);
-const mcts = new MonteCarloSearchTree(
+const mcts = new MonteCarloTreeSearch(
   Pieces.x,
   new Node(game.getBoardState()),
-  getChildrenNodes,
-  game.isGameOver,
+  getChildNodes,
+  game.isGameOver.bind(game),
   calculateReward
 );
 
-// Need to know to do this:
-// Current state
-// Get next states
-// Is Terminal
-// Reward when terminal
+mcts.search(100);
+
+// Variables...
+// CurrentNodeUnderEvaluation

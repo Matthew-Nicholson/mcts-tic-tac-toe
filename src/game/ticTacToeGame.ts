@@ -111,4 +111,3 @@ export class TicTacToeGame {
 }
 
 const game = new TicTacToeGame(PlayerTypes.human, PlayerTypes.ai);
-console.log(game.legalMoves);
