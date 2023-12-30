@@ -6,7 +6,6 @@ import { Node } from "./node";
 import { Pieces } from "../shared/types/pieces";
 import { getChildNodes } from "./getChildNodes";
 import { isGameOver } from "./isGameOver";
-import { copyBoard } from "../shared/utils/copyBoard";
 
 export class MonteCarloTreeSearch<T, EP extends string> {
   evaluationPerspective: EP;
@@ -71,41 +70,44 @@ export class MonteCarloTreeSearch<T, EP extends string> {
   }
 
   rollout(node: Node<T>): void {
-    let current = node;
-    while (!this.isTerminal(current)) {
-      let opts = this.getChildNodes(current);
-      current = opts[Math.floor(Math.random() * opts.length)];
+    let initialNode = node;
+    let currentState = node;
+    while (!this.isTerminal(currentState)) {
+      let availableMoves = this.getChildNodes(currentState);
+      currentState =
+        availableMoves[Math.floor(Math.random() * availableMoves.length)];
     }
+    this.backpropagate(
+      initialNode,
+      this.getReward(currentState, this.evaluationPerspective)
+    );
   }
 
   backpropagate(node: Node<T>, reward: number): void {
-    let current = node;
-    while (current) {
-      current.visits++;
-      current.score += reward;
-      current = this.getParent(current) as Node<T>;
-    }
+    node.visits++;
+    node.score += reward;
+    if (!node.parent) return;
+    this.backpropagate(node.parent, reward);
   }
 
-  search(iterations: number, node: Node<T>): T | null {
-    console.log("searching...");
+  search(iterations: number = 100, node: Node<T>): T | undefined {
     if (iterations === 0) {
       return this.initialNode.children.sort((a, b) => b.visits - a.visits)[0]
         .value;
     }
-    let current = node;
-    if (this.isLeafNode(current)) {
-      if (this.getVisits(current) === 0) {
-        this.rollout(current);
+
+    if (this.isLeafNode(node)) {
+      // Expand node
+      if (this.getVisits(node) === 0) {
+        this.rollout(node);
       } else {
-        for (let child of this.getChildNodes(current)) {
-          current.addChild(child);
+        for (let child of this.getChildNodes(node)) {
+          node.addChild(child);
         }
-        current = node.children[0];
-        this.rollout(current);
+        node = node.children[0];
       }
     } else {
-      current = this.getMaxUCB1(current.children);
+      node = this.getMaxUCB1(node.children);
     }
     return this.search(iterations - 1, node);
   }
@@ -120,7 +122,7 @@ const mcts = new MonteCarloTreeSearch(
   calculateReward
 );
 
-mcts.search(2, mcts.initialNode);
+console.log(mcts.search(20, mcts.initialNode));
 
 // Variables...
 // CurrentNodeUnderEvaluation
