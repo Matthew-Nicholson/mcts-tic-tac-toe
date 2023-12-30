@@ -3,6 +3,7 @@ import { Pieces } from "../shared/types/pieces";
 import { PlayerTypes } from "../shared/types/playerTypes";
 import { getInitialPosition } from "../shared/utils/getInitialPosition";
 import type { Results, Square } from "./types";
+import { getLegalMoves } from "./utils/getLegalMoves";
 import { isGameOver } from "./utils/isGameOver";
 
 interface Player {
@@ -60,16 +61,8 @@ export class TicTacToeGame {
     return this;
   }
 
-  getLegalMoves(): Square[] {
-    const legalMoves: Square[] = [];
-    this.getBoardState().forEach((row, i) => {
-      row.forEach((col, j) => {
-        if (col === "") {
-          legalMoves.push([i, j] as Square);
-        }
-      });
-    });
-    return legalMoves;
+  get legalMoves(): Square[] {
+    return getLegalMoves(this.boardState);
   }
 
   isLegalMove(square: Square, board = this.getBoardState()): boolean {
@@ -118,3 +111,4 @@ export class TicTacToeGame {
 }
 
 const game = new TicTacToeGame(PlayerTypes.human, PlayerTypes.ai);
+console.log(game.legalMoves);
