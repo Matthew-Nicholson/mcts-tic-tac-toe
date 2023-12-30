@@ -1,26 +1,31 @@
 import { TicTacToeGame } from "../game/ticTacToeGame";
 import { PlayerTypes } from "../shared/types/playerTypes";
 import { calculateUCB1 } from "./calculateUCB1";
-import { getReward } from "./getReward";
+import { calculateReward } from "./calculateReward";
 import { Node } from "./node";
+import { Pieces } from "../shared/types/pieces";
+import { getChildrenNodes } from "./getChildrenNodes";
 
-export class MonteCarloSearchTree<T> {
+export class MonteCarloSearchTree<T, EP extends string> {
+  evaluationPerspective: EP;
   initialNode: Node<T>;
-  getOptions: (node: Node<T>) => Node<T>[];
+  getChildNodes: (node: Node<T>) => Node<T>[];
   isTerminal: (node: Node<T>) => boolean;
-  getValue: (node: Node<T>) => number;
-  current: Node<T>;
+  getReward: (node: Node<T>, perspective: EP) => number;
+  private currentNodeUnderEvaluation: Node<T>;
   constructor(
+    evaluationPerspective: EP,
     initialNode: Node<T>,
-    getOptionsCb: (node: Node<T>) => Node<T>[],
-    isTerminalCb: (node: Node<T>) => boolean,
-    evaluateTerminalCb: (node: Node<T>) => number
+    getChildNodes: (node: Node<T>) => Node<T>[],
+    isTerminal: (node: Node<T>) => boolean,
+    getReward: (node: Node<T>, perspective: EP) => number
   ) {
+    this.evaluationPerspective = evaluationPerspective;
     this.initialNode = initialNode;
-    this.getOptions = getOptionsCb;
-    this.isTerminal = isTerminalCb;
-    this.getValue = evaluateTerminalCb;
-    this.current = initialNode;
+    this.getChildNodes = getChildNodes;
+    this.isTerminal = isTerminal;
+    this.getReward = getReward;
+    this.currentNodeUnderEvaluation = initialNode;
   }
 
   isLeafNode(node: Node<T>): boolean {
@@ -28,7 +33,7 @@ export class MonteCarloSearchTree<T> {
   }
 
   getUCB1(node: Node<T>): number {
-    return calculateUCB1(node.wins, node.visits, node.parent?.visits ?? 0);
+    return calculateUCB1(node.score, node.visits, node.parent?.visits ?? 0);
   }
 
   getMaxUCB1(nodes: Node<T>[]): Node<T> {
@@ -60,13 +65,13 @@ export class MonteCarloSearchTree<T> {
 
   rollout(node: Node<T>): void {
     if (this.isTerminal(node)) {
-      console.log("Result:", this.getValue(node));
-      const reward = this.getValue(node);
+      console.log("Result:", this.getReward(node, this.evaluationPerspective));
+      const reward = this.getReward(node, this.evaluationPerspective);
       this.backpropagate(node, reward);
       return;
     }
 
-    const options = this.getOptions(node);
+    const options = this.getChildNodes(node);
     for (let option of options) {
       node.addChild(option);
     }
@@ -88,7 +93,7 @@ export class MonteCarloSearchTree<T> {
     if (iterations < 1) {
       return this.initialNode.children.sort((a, b) => b.visits - a.visits)[0];
     }
-    let current = this.current;
+    let current = this.currentNodeUnderEvaluation;
 
     // Get to a leaf node
     while (!this.isLeafNode(current)) {
@@ -102,15 +107,22 @@ export class MonteCarloSearchTree<T> {
     } else {
       this.rollout(current);
     }
-    this.current = current;
+    this.currentNodeUnderEvaluation = current;
     this.search(iterations - 1);
   }
 }
 
 const game = new TicTacToeGame(PlayerTypes.human, PlayerTypes.ai);
 const mcts = new MonteCarloSearchTree(
+  Pieces.x,
   new Node(game.getBoardState()),
-  null,
+  getChildrenNodes,
   game.isGameOver,
-  getReward
+  calculateReward
 );
+
+// Need to know to do this:
+// Current state
+// Get next states
+// Is Terminal
+// Reward when terminal
