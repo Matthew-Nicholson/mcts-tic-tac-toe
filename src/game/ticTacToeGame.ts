@@ -1,10 +1,12 @@
 import type { BoardState } from "../shared/types/boardState";
 import { Pieces } from "../shared/types/pieces";
 import { PlayerTypes } from "../shared/types/playerTypes";
+import { SquareState } from "../shared/types/squareState";
 import { getInitialPosition } from "../shared/utils/getInitialPosition";
 import type { Results, Square } from "./types";
 import { getLegalMoves } from "./utils/getLegalMoves";
 import { isGameOver } from "./utils/isGameOver";
+import { potentialMoveOptions } from "./utils/potentialMoveOptions";
 
 interface Player {
   name: string;
@@ -65,6 +67,14 @@ export class TicTacToeGame {
     return getLegalMoves(this.boardState);
   }
 
+  get potentialMoveOptions(): SquareState[][][] {
+    return potentialMoveOptions(
+      this.legalMoves,
+      this.boardState,
+      this.toMove.piece
+    );
+  }
+
   isLegalMove(square: Square, board = this.getBoardState()): boolean {
     return board[square[0]][square[1]] === "";
   }
@@ -98,19 +108,19 @@ export class TicTacToeGame {
     return isGameOver(this.getBoardState());
   }
 
-  potentialMoveOptions = (square: Square[], board = this.getBoardState()) => {
-    if (isGameOver(board) || square.length == 0) return [];
-    let potentialBoardOptions = [];
-    let copyOfBoard;
-    for (let i = 0; i < square.length; i++) {
-      copyOfBoard = board.map((row) => [...row]);
-      let row = square[i][0];
-      let column = square[i][1];
-      copyOfBoard[row][column] = game.toMove.piece;
-      potentialBoardOptions.push(copyOfBoard);
-    }
-    return potentialBoardOptions;
-  };
+  // potentialMoveOptions = (squares: Square[], board = this.getBoardState()) => {
+  //   if (isGameOver(board) || squares.length == 0) return [];
+  //   let potentialBoardOptions = [];
+  //   let copyOfBoard;
+  //   for (let i = 0; i < squares.length; i++) {
+  //     copyOfBoard = board.map((row) => [...row]);
+  //     let row = squares[i][0];
+  //     let column = squares[i][1];
+  //     copyOfBoard[row][column] = game.toMove.piece;
+  //     potentialBoardOptions.push(copyOfBoard);
+  //   }
+  //   return potentialBoardOptions;
+  // };
 
   print(): void {
     console.log("\n");
@@ -125,7 +135,8 @@ export class TicTacToeGame {
 }
 
 const game = new TicTacToeGame(PlayerTypes.human, PlayerTypes.ai);
-// game.makeMove([0, 0]);
+game.makeMove([0, 0]);
+console.log(game.potentialMoveOptions);
 // game.makeMove([0, 1]);
 // game.makeMove([0, 2]);
 // game.makeMove([1, 0]);
