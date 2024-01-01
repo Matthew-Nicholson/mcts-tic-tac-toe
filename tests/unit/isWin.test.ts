@@ -7,15 +7,15 @@ import { BoardState } from "../../src/shared/types/boardState";
 describe("isWin", () => {
   it("should return true when the game is won", () => {
     const gameState: BoardState = [
-      [Pieces.x, Pieces.x, Pieces.x],
-      [Pieces.o, Pieces.o, ""],
+      [Pieces.X, Pieces.X, Pieces.X],
+      [Pieces.O, Pieces.O, ""],
       ["", "", ""],
     ];
-    expect(isWin(gameState, Pieces.x)).toBe(true);
+    expect(isWin(gameState, Pieces.X)).toBe(true);
   });
 
   it("should return false when the game is not won", () => {
     const gameState = getInitialPosition();
-    expect(isWin(gameState, Pieces.x)).toBe(false);
+    expect(isWin(gameState, Pieces.X)).toBe(false);
   });
 });

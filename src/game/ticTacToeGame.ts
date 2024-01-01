@@ -23,12 +23,12 @@ export class TicTacToeGame {
     this.playerX = {
       name: "Player X",
       type: playerX,
-      piece: Pieces.x,
+      piece: Pieces.X,
     };
     this.playerO = {
       name: "Player O",
       type: playerO,
-      piece: Pieces.o,
+      piece: Pieces.O,
     };
     this.toMove = this.playerX;
   }

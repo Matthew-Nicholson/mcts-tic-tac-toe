@@ -7,7 +7,7 @@ import { Node } from "./node";
 export function isGameOver(node: Node<BoardState>): boolean {
   return (
     isDraw(node?.value) ||
-    isWin(node?.value, Pieces.x) ||
-    isWin(node?.value, Pieces.o)
+    isWin(node?.value, Pieces.X) ||
+    isWin(node?.value, Pieces.O)
   );
 }

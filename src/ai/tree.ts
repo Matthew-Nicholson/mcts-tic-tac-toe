@@ -11,6 +11,11 @@ export class Tree<T> {
     return this;
   }
 
+  replaceRoot(node: Node<T>) {
+    this.root = node;
+    return this;
+  }
+
   getRoot(): Node<T> | null {
     return this.root;
   }

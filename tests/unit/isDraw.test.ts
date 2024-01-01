@@ -6,9 +6,9 @@ import { Pieces } from "../../src/shared/types/pieces";
 describe("isDraw", () => {
   it("should return true if the board is full and there is no winner", () => {
     const board: BoardState = [
-      [Pieces.x, Pieces.o, Pieces.x],
-      [Pieces.o, Pieces.x, Pieces.o],
-      [Pieces.o, Pieces.x, Pieces.o],
+      [Pieces.X, Pieces.O, Pieces.X],
+      [Pieces.O, Pieces.X, Pieces.O],
+      [Pieces.O, Pieces.X, Pieces.O],
     ];
 
     expect(isDraw(board)).toBe(true);
@@ -16,9 +16,9 @@ describe("isDraw", () => {
 
   it("should return false if the board is not full", () => {
     const board: BoardState = [
-      [Pieces.x, "", Pieces.x],
-      [Pieces.o, Pieces.x, Pieces.o],
-      [Pieces.o, Pieces.x, Pieces.o],
+      [Pieces.X, "", Pieces.X],
+      [Pieces.O, Pieces.X, Pieces.O],
+      [Pieces.O, Pieces.X, Pieces.O],
     ];
 
     expect(isDraw(board)).toBe(false);
@@ -26,9 +26,9 @@ describe("isDraw", () => {
 
   it("should return false if there is a winner", () => {
     const board: BoardState = [
-      [Pieces.x, Pieces.o, Pieces.x],
-      [Pieces.o, Pieces.x, Pieces.o],
-      [Pieces.o, Pieces.x, Pieces.x],
+      [Pieces.X, Pieces.O, Pieces.X],
+      [Pieces.O, Pieces.X, Pieces.O],
+      [Pieces.O, Pieces.X, Pieces.X],
     ];
 
     expect(isDraw(board)).toBe(false);
