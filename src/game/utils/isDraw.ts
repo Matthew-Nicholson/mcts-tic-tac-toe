@@ -6,6 +6,6 @@ export function isDraw(board: BoardState): boolean {
   return (
     !isWin(board, Pieces.x) &&
     !isWin(board, Pieces.o) &&
-    board.flat().every((square) => square !== "")
+    board?.flat().every((square) => square !== "")
   );
 }

@@ -4,8 +4,11 @@ import { BoardState } from "../shared/types/boardState";
 import { getToMoveFromBoard } from "../shared/utils/getToMoveFromBoard";
 import { Node } from "./node";
 
-export function getChildNodes(node: Node<BoardState>): Node<BoardState>[] {
-  const board: BoardState = node.value;
+export function getChildNodes(
+  node: Node<BoardState>
+): Node<BoardState>[] | null {
+  const board: BoardState = node?.value;
+  if (!board) return null;
   const childNodes: Node<BoardState>[] = [];
 
   const legalMoves = getLegalMoves(board);

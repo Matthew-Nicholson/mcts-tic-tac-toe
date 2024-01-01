@@ -7,8 +7,8 @@ import { GameOverReward } from "./config";
 import { Node } from "./node";
 
 export function calculateReward(
-  node: Node<BoardState>,
-  perspective: Pieces
+  perspective: Pieces,
+  node: Node<BoardState>
 ): number {
   if (!isGameOver(node)) {
     throw new Error("calculateReward called on non-terminal node");

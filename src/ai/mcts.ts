@@ -1,5 +1,10 @@
 import { Tree } from "./tree";
 import { Node } from "./node";
+import { BoardState } from "../shared/types/boardState";
+import { getChildNodes } from "./getChildNodes";
+import { calculateReward } from "./calculateReward";
+import { Pieces } from "../shared/types/pieces";
+import { getInitialPosition } from "../shared/utils/getInitialPosition";
 
 export class MCTS<T> {
   tree: Tree<T>;
@@ -70,8 +75,10 @@ export class MCTS<T> {
   }
 
   simulate(node: Node<T>): number {
+    let prev = node;
     let current = node;
-    while (true) {
+    while (current) {
+      prev = current;
       const possibleMoves = this.getFutureStates(current);
       if (!possibleMoves) {
         break;
@@ -79,7 +86,7 @@ export class MCTS<T> {
       current = this.selectRandom(possibleMoves);
     }
 
-    return this.getReward(current);
+    return this.getReward(prev);
   }
 
   backpropagate(node: Node<T>, reward: number): void {
@@ -123,3 +130,24 @@ export class MCTS<T> {
     return bestChild ?? null;
   }
 }
+
+// TESTING
+
+const tree = new Tree<BoardState>();
+const calculateRewardO = (node: Node<BoardState>) =>
+  calculateReward(Pieces.o, node);
+const search = new MCTS<BoardState>(tree, getChildNodes, calculateRewardO);
+
+tree.addRoot(new Node<BoardState>(getInitialPosition()));
+
+tree.addNode(
+  tree.getRoot()!,
+  new Node<BoardState>([
+    ["", Pieces.x, Pieces.o],
+    ["", Pieces.x, ""],
+    ["", "", ""],
+  ])
+);
+
+console.log(tree.getRoot()!.children[0].value);
+console.log(search.getBestMove(tree.getRoot()!.children[0], 50)?.value);
