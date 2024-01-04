@@ -1,6 +1,7 @@
 :root {
   --board-size: 300px;
   --board-border-color: #fff;
+  --board-item-width: 1rem;
 }
 
 .board {
@@ -29,9 +30,49 @@
   border-top-style: solid;
 }
 
+.square > div {
+  height: 100%;
+  position: relative;
+  width: 100%;
+}
+.x:before,
+.x:after {
+  background-color: var(--board-border-color);
+  border-radius: 3px;
+  bottom: 0;
+  content: "";
+  height: 80%;
+  left: 50%;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%) rotate(-45deg);
+  width: var(--board-item-width);
+}
+.x:after {
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.o:after {
+  border-width: var(--board-item-width);
+  border-style: solid;
+  border-color: var(--board-border-color);
+  border-radius: 50rem;
+  bottom: 0;
+  content: "";
+  height: 55%;
+  left: 50%;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%) translateX(-50%);
+  width: 55%;
+}
+
 /* LARGE TABLET + */
 @media screen and (min-width: 769px) {
   :root {
     --board-size: 450px;
+    --board-item-width: 1.4rem;
   }
 }
