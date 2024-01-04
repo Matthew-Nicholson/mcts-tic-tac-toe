@@ -1,75 +1,65 @@
+:root {
+  --text-5xl: 4rem;
+  --text-4xl: 3.5rem;
+  --text-3xl: 3rem;
+  --text-2xl: 2.5rem;
+  --text-xl: 2rem;
+  --text-lg: 1.75rem;
+  --text-md: 1rem;
+  --text-sm: 0.8rem;
+  --text-xs: 0.64rem;
+}
+
 .hdg /* Heading */ {
   font-weight: 700;
 }
 
-/* 1.250 - Major */
 .text-5xl {
-  font-size: 4rem;
+  font-size: var(--text-5xl);
 }
 
 .text-4xl {
-  font-size: 3.5rem;
+  font-size: var(--text-4xl);
 }
 
 .text-3xl {
-  font-size: 3rem;
+  font-size: var(--text-3xl);
 }
 
 .text-2xl {
-  font-size: 2.5rem;
+  font-size: var(--text-2xl);
 }
 
 .text-xl {
-  font-size: 2rem;
+  font-size: var(--text-xl);
 }
 
 .text-lg {
-  font-size: 1.75rem;
+  font-size: var(--text-lg);
 }
 
 .text-md {
-  font-size: 1rem;
+  font-size: var(--text-md);
 }
 
 .text-sm {
-  font-size: 0.8rem;
+  font-size: var(--text-sm);
 }
 
 .text-xs {
-  font-size: 0.64rem;
+  font-size: var(--text-xs);
 }
 
 @media screen and (min-width: 769px) {
-  /* 1.333 - Perfect Forth */
-  .text-5xl {
-    font-size: 5rem;
-  }
-
-  .text-4xl {
-    font-size: 4.5rem;
-  }
-
-  .text-3xl {
-    font-size: 4rem;
-  }
-
-  .text-2xl {
-    font-size: 3.5rem;
-  }
-
-  .text-xl {
-    font-size: 3rem;
-  }
-
-  .text-lg {
-    font-size: 2.5rem;
-  }
-
-  .text-sm {
-    font-size: 0.75rem;
-  }
-
-  .text-xs {
-    font-size: 0.563rem;
+  :root {
+    --text-5xl: 5rem;
+    --text-4xl: 4.5rem;
+    --text-3xl: 4rem;
+    --text-2xl: 3.5rem;
+    --text-xl: 3rem;
+    --text-lg: 2.5rem;
+    --text-md: 1rem;
+    --text-sm: 0.75rem;
+    --text-xs: 0.563rem;
   }
 }
