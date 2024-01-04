@@ -136,7 +136,7 @@ export class TicTacToeGame {
 
 const game = new TicTacToeGame(PlayerTypes.human, PlayerTypes.ai);
 game.makeMove([0, 0]);
-console.log(game.potentialMoveOptions);
+// console.log(game.potentialMoveOptions);
 // game.makeMove([0, 1]);
 // game.makeMove([0, 2]);
 // game.makeMove([1, 0]);

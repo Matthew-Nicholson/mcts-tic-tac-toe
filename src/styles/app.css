@@ -23,6 +23,14 @@
   justify-content: center;
 }
 
+.alert {
+  padding: 2rem 0 4rem;
+  text-align: center;
+}
+.alert > h2 {
+  font-size: var(--text-lg);
+}
+
 .footer {
   text-align: center;
 }

@@ -96,6 +96,12 @@
   animation: blink 0.3s steps(1) 3;
 }
 
+.board.tie .square > div {
+  -moz-animation: blink 0.3s steps(1) 3;
+  -webkit-animation: blink 0.3s steps(1) 3;
+  animation: blink 0.3s steps(1) 3;
+}
+
 /* LARGE TABLET + */
 @media screen and (min-width: 769px) {
   :root {
