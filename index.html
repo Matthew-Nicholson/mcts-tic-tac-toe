@@ -5,10 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="./assets/tic-tac-toe-favicon.ico" />
     <title>Tic Tac Toe</title>
+
+    <!-- STYLES -->
+    <link rel="stylesheet" href="/src/styles/global.css" />
+    <link rel="stylesheet" href="/src/styles/app.css" />
+
+    <!-- GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Sen:wght@800&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
-    <tic-tac-toe data-testid="tic-tac-toe"></tic-tac-toe>
+    <div class="app">
+      <header class="header">
+        <h1 class="hdg text-5xl header__title">TIC TAC TOE</h1>
+      </header>
 
-    <script src="./src/app.ts"></script>
+      <main class="container content">
+        <tic-tac-toe data-testid="tic-tac-toe"></tic-tac-toe>
+      </main>
+
+      <footer class="footer">Footer</footer>
+    </div>
+
+    <script src="./src/app.ts" type="module"></script>
   </body>
 </html>
