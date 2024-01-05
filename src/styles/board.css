@@ -1,9 +1,9 @@
 @import url(./animations.css);
 
 :root {
-  --board-size: 300px;
   --board-border-color: #fff;
   --board-item-width: 1rem;
+  --board-size: 300px;
 }
 
 .board {
@@ -56,10 +56,10 @@
 }
 
 .o:after {
-  border-width: var(--board-item-width);
-  border-style: solid;
   border-color: var(--board-border-color);
   border-radius: 50rem;
+  border-style: solid;
+  border-width: var(--board-item-width);
   bottom: 0;
   content: "";
   height: 55%;
@@ -103,9 +103,9 @@
 }
 
 /* LARGE TABLET + */
-@media screen and (min-width: 769px) {
+@media screen and (min-width: 768px) {
   :root {
-    --board-size: 450px;
     --board-item-width: 1.4rem;
+    --board-size: 50vh;
   }
 }

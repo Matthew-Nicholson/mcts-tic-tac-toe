@@ -23,12 +23,12 @@ class TicTacToe extends HTMLElement {
     this.initializeGame(PlayerTypes.human, PlayerTypes.ai);
 
     this.innerHTML = `
-        <div class='alert'></div>
         <game-board></game-board>
     `;
 
     const game = this.game;
     const alertEl = document.getElementsByClassName("alert")[0];
+    console.info(alertEl);
 
     resetAlert(game);
 

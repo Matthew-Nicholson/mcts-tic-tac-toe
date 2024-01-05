@@ -21,14 +21,23 @@
   <body>
     <div class="app">
       <header class="header">
-        <h1 class="hdg text-5xl header__title">TIC TAC TOE</h1>
+        <h1 class="hdg">TIC TAC TOE</h1>
+        <div class="alert"></div>
       </header>
 
       <main class="container content">
         <tic-tac-toe data-testid="tic-tac-toe"></tic-tac-toe>
       </main>
 
-      <footer class="footer">Footer</footer>
+      <footer class="footer">
+        &copy; Copyright - Credits on
+        <a
+          href="https://github.com/Matthew-Nicholson/mcts-tic-tac-toe"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Github</a
+        >
+      </footer>
     </div>
 
     <script src="./src/app.ts" type="module"></script>
