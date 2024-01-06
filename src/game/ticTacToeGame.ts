@@ -25,12 +25,12 @@ export class TicTacToeGame {
     this.playerX = {
       name: "Player X",
       type: playerX,
-      piece: Pieces.x,
+      piece: Pieces.X,
     };
     this.playerO = {
       name: "Player O",
       type: playerO,
-      piece: Pieces.o,
+      piece: Pieces.O,
     };
     this.toMove = this.playerX;
   }
@@ -135,16 +135,4 @@ export class TicTacToeGame {
 }
 
 const game = new TicTacToeGame(PlayerTypes.human, PlayerTypes.ai);
-game.makeMove([0, 0]);
-// console.log(game.potentialMoveOptions);
-// game.makeMove([0, 1]);
-// game.makeMove([0, 2]);
-// game.makeMove([1, 0]);
-// game.makeMove([1, 1]);
-// game.makeMove([1, 2]);
-// game.makeMove([2, 0]);
-// game.makeMove([2, 1]);
-// game.makeMove([2, 2]);
 
-// console.log("Original Board:");
-// console.log(game.getBoardState());

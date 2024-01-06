@@ -4,8 +4,8 @@ import { isWin } from "./isWin";
 
 export function isDraw(board: BoardState): boolean {
   return (
-    !isWin(board, Pieces.x) &&
-    !isWin(board, Pieces.o) &&
-    board.flat().every((square) => square !== "")
+    !isWin(board, Pieces.X) &&
+    !isWin(board, Pieces.O) &&
+    board?.flat().every((square) => square !== "")
   );
 }

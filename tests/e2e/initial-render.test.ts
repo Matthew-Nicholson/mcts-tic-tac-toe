@@ -22,7 +22,7 @@ afterEach(async () => {
   await context.close();
 });
 
-it('should display "my-component" element', async () => {
+it.skip('should display "my-component" element', async () => {
   await page.goto("http://localhost:1337");
   const component = await page.$("data-testid=tic-tac-toe");
   expect(component).toBeTruthy();

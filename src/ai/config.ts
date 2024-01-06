@@ -1,5 +1,5 @@
 export const GameOverReward = {
-  win: 3,
-  draw: 2,
-  loss: 1,
+  win: 1,
+  draw: 0,
+  loss: -1,
 } as const;

@@ -1,7 +1,8 @@
 import { BoardState } from "../../shared/types/boardState";
 import { Pieces } from "../../shared/types/pieces";
 
-export function isWin(board: BoardState, player: Pieces): Boolean {
+export function isWin(board: BoardState, player: Pieces): boolean {
+  if (!board) return false;
   const lines = [
     [board[0][0], board[0][1], board[0][2]],
     [board[1][0], board[1][1], board[1][2]],
