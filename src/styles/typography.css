@@ -63,3 +63,17 @@
     --text-xs: 0.563rem;
   }
 }
+
+@media screen and (min-width: 1440px) {
+  :root {
+    --text-5xl: calc(5rem + 1vw);
+    --text-4xl: calc(4.5rem + 1vw);
+    --text-3xl: calc(4rem + 1vw);
+    --text-2xl: calc(3.5rem + 1vw);
+    --text-xl: calc(3rem + 1vw);
+    --text-lg: calc(2.5rem + 1vw);
+    --text-md: calc(1rem + 1vw);
+    --text-sm: calc(0.75rem + 1vw);
+    --text-xs: calc(0.563rem + 1vw);
+  }
+}
