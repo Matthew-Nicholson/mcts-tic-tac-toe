@@ -1,0 +1,111 @@
+@import url(./animations.css);
+
+:root {
+  --board-size: 300px;
+  --board-border-color: #fff;
+  --board-item-width: 1rem;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  height: var(--board-size);
+  width: var(--board-size);
+}
+
+.square {
+  border-color: var(--board-border-color);
+  border-width: 5px;
+  cursor: pointer;
+}
+
+.square.left {
+  border-right-style: solid;
+}
+.square.right {
+  border-left-style: solid;
+}
+.square.top {
+  border-bottom-style: solid;
+}
+.square.bottom {
+  border-top-style: solid;
+}
+
+.square > div {
+  height: 100%;
+  position: relative;
+  width: 100%;
+}
+.x:before,
+.x:after {
+  background-color: var(--board-border-color);
+  border-radius: 3px;
+  bottom: 0;
+  content: "";
+  height: 80%;
+  left: 50%;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%) rotate(-45deg);
+  width: var(--board-item-width);
+}
+.x:after {
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.o:after {
+  border-width: var(--board-item-width);
+  border-style: solid;
+  border-color: var(--board-border-color);
+  border-radius: 50rem;
+  bottom: 0;
+  content: "";
+  height: 55%;
+  left: 50%;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%) translateX(-50%);
+  width: 55%;
+}
+
+.square .x,
+.square .o {
+  -moz-animation: appear 0.2s cubic-bezier(0.5, 1.8, 0.1, 1.1);
+  -webkit-animation: appear 0.2s cubic-bezier(0.5, 1.8, 0.1, 1.1);
+  -webkit-transform: translate3d(0, 0, 0);
+  animation: appear 0.2s cubic-bezier(0.5, 1.8, 0.1, 1.1);
+  position: relative;
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+}
+
+.board.win .square > div {
+  opacity: 0.6;
+}
+
+.board.win .square > div.win {
+  opacity: 1;
+}
+
+.board.win .square > .win {
+  -moz-animation: blink 0.3s steps(1) 3;
+  -webkit-animation: blink 0.3s steps(1) 3;
+  animation: blink 0.3s steps(1) 3;
+}
+
+.board.tie .square > div {
+  -moz-animation: blink 0.3s steps(1) 3;
+  -webkit-animation: blink 0.3s steps(1) 3;
+  animation: blink 0.3s steps(1) 3;
+}
+
+/* LARGE TABLET + */
+@media screen and (min-width: 769px) {
+  :root {
+    --board-size: 450px;
+    --board-item-width: 1.4rem;
+  }
+}

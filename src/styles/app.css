@@ -1,0 +1,36 @@
+@import url(./typography.css);
+@import url(./board.css);
+
+.app {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
+}
+
+.header {
+  padding: 2rem 1.6rem;
+  text-align: center;
+}
+
+.container {
+  padding-inline: 1.6rem;
+}
+
+.content {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.alert {
+  padding: 2rem 0 4rem;
+  text-align: center;
+}
+.alert > h2 {
+  font-size: var(--text-lg);
+}
+
+.footer {
+  text-align: center;
+}

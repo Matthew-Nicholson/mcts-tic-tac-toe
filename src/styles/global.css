@@ -1,0 +1,20 @@
+* {
+  box-sizing: border-box;
+  font-size: inherit;
+  margin: 0;
+  padding: 0;
+  font-weight: 400;
+}
+
+html {
+  font-size: 62.5%; /* 1rem = 10px  */
+}
+
+body {
+  background-color: #070c13;
+  color: #fff;
+  font-family: "Sen", sans-serif;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.6rem;
+  min-height: 100vh;
+}
