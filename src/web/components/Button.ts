@@ -7,11 +7,10 @@ class Button extends HTMLElement {
     const icon = this.getAttribute("data-icon");
     const variant = this.getAttribute("data-variant");
     const buttonText = this.getAttribute("button-text");
-
-    this.shadowRoot.innerHTML = `
+    // ${(icon && `<ion-icon name="${icon}"></ion-icon>`) || ""}
+    this.innerHTML = `
     <style>${css}</style>
     <button class="button variant-${variant}">
-    ${(icon && `<ion-icon name="${icon}"></ion-icon>`) || ""} 
      <span class="label"> 
      <slot>${buttonText}</slot> </span>
       </button>
